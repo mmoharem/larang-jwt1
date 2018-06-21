@@ -1,0 +1,6 @@
+1- creating navbar component
+    a) goto src/app/app.component.html and add
+        <app-navbar></app-navbar>
+    b) goto terminal and run 
+        $ng generate component components/navbar or
+        $ ng g c components/navbar

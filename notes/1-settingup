@@ -1,0 +1,17 @@
+1- $ laravel new backend
+2- $ ng new frontend
+3- setting JWT (JSON Web Token Authentication for Laravel & Lumen).
+    (https://github.com/tymondesigns/jwt-auth)
+    
+    //there is two wayas 
+    1- got ducs copy and past at terminal
+        $ composer require tymon/jwt-auth
+4- installing bootstrap on frontend using npm
+    a) $ npm install bootstrap
+    b) goto src/style.css and import bootstrap
+        @import '~/bootstrap/dist/css/bootstrap.css'
+
+5- running the ng-server
+    $ ng serve -o
+
+    
