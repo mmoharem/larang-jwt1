@@ -1,0 +1,16 @@
+1- creating navbar component
+    a) goto src/app/app.component.html and add
+        <app-navbar></app-navbar>
+    b) goto terminal and run 
+        $ng generate component components/navbar or
+        $ ng g c components/navbar
+    c) add the navbar html code
+
+2- creating other components
+    a) goto terminal and run 
+        $ ng g c components/login
+        $ ng g c components/signup
+        $ ng g c components/profile
+        $ ng g c components/passwd/request-reset
+        $ ng g c components/passwd/response-reset
+
