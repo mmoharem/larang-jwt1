@@ -1,0 +1,73 @@
+    creating the http request:
+
+//Frontend
+
+1-  for adding the HttpClientModule
+    a) goto app.module.ts and adding
+        import {  HttpClientModule } from '@angular/common/http';
+
+        imports: [
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        HttpClientModule,
+
+    b) GOTO logi.component.ts and adding
+        import { HttpClient } from '@angular/common/http'; //this will added automaticly after private http:HttpClient
+
+        constructor(private http:HttpClient) { }
+
+        onSubmit() {
+            return this.http.post('http://127.0.0.1:8000/api/login', this.form).subscribe(
+            data => console.log(data),
+            error => console.log(error)
+            );
+        }
+        //Note// to check the Backend server run $ php artisan serve
+
+//Backend:
+
+1- $ php artisan make:middleware CORS
+2- goto frontend/app/http/middleware/CORS.php and edite the handle function
+    public function handle($request, Closure $next)
+        {
+            header('Access-Control-Allow-Origin : *');
+            header('Access-Control-Allow-Headers : Content-type,X-Auth-Token,Authorization,Origin');
+            return $next($request);
+        }
+
+3- to register midle on the laravel app goto app/http/kernal.php and added
+    //under protected $middleware = [
+        \App\Http\Middleware\CORS::class,
+
+    //under protected $routeMiddleware = [
+        'CORS' => \App\Http\Middleware\CORS::class,
+
+4- create new database at phpmyadmin and edite .env
+
+5- for displaying error
+    a) goto app/http/app/AuthController.php and edite the login function
+        return response()->json(['error' => 'email or password doesnt exist'], 401);
+
+    b) goto login.component.ts
+        public error = null;
+
+        constructor(private http:HttpClient) { }
+
+        onSubmit() {
+            return this.http.post('http://127.0.0.1:8000/api/login', this.form).subscribe(
+                data => console.log(data),
+                error => this.handleError(error)
+                );
+            }
+
+            handleError(error){
+                this.error = error.error.error;
+            }
+
+    c) goto login.component.html and added
+        <div class="alert alert-danger" [hidden]="!error">
+                    {{error}}
+                </div>
+
+

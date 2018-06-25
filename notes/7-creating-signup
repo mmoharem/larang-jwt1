@@ -1,0 +1,63 @@
+1- goto login.component.html and add new signup button
+    <a routerLink="/signup" class="btn btn-info float-right">Sign Up</a>
+
+2- goto signup.component.html and past the code from login.component.html.
+
+3- goto signup.component.ts and add
+        import { Component, OnInit } from '@angular/core';
+        import { HttpClient } from '@angular/common/http';
+
+        @Component({
+        selector: 'app-signup',
+        templateUrl: './signup.component.html',
+        styleUrls: ['./signup.component.css']
+        })
+        export class SignupComponent implements OnInit {
+
+        public error = null;
+
+        public form = {
+            email: null,
+            name: null,
+            password: null,
+            password_confirmation: null
+        };
+
+        constructor(private http:HttpClient) { }
+
+        onSubmit() {
+            return this.http.post('http://127.0.0.1:8000/api/signup', this.form).subscribe(
+            data => console.log(data),
+            error => this.handleError(error)
+            );
+        }
+
+        handleError(error){
+            this.error = error.error.error;
+        }
+
+        ngOnInit() {
+        }
+
+        }
+
+4- goto backend/app/controller/AuthController.php and add
+    //
+    $this->middleware('auth:api', ['except' => ['login', 'signup']]);
+
+    //
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function signup(Request $request)
+    {
+       $user = User::create($request->all());
+    }
+
+5- $ php artisan make:request SignupRequest
+
+6- goto app/http/request/SignupRequest.php
+
+

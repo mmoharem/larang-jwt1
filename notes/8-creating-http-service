@@ -1,0 +1,55 @@
+//Creating service handle HTTP
+1- $ ng g s Services/jarwis --module=app
+
+2- goto jarwis.component.ts and add
+    import { Injectable } from '@angular/core';
+    import { HttpClient } from '@angular/common/http';
+
+    @Injectable()
+    export class JarwisService {
+
+    constructor(private http:HttpClient) { }
+
+    login(data) {
+        return this.http.post('http://127.0.0.1:8000/api/login', data)
+    }
+
+    signup(data) {
+        return this.http.post('http://127.0.0.1:8000/api/signup', data)
+    }
+
+    }
+    
+3- goto login.component.ts and edite
+    constructor(private jarwis:JarwisService) { }
+
+    onSubmit() {
+        this.jarwis.login(this.form).subscribe(
+        data => console.log(data),
+        error => this.handleError(error)
+        );
+    }
+
+4- goto signup.component.ts and edite
+    //
+    constructor(private jarwis:JarwisService) { }
+
+    onSubmit() {
+        this.jarwis.signup(this.form).subscribe(
+        data => console.log(data),
+        error => this.handleError(error)
+        );
+    }
+    
+5- more refactoring for jarwis.component.ts
+    private baseUrl = 'http://127.0.0.1:8000/api';
+
+    constructor(private http:HttpClient) { }
+
+    login(data) {
+        return this.http.post(`${this.baseUrl}/login`, data)
+    }
+
+    signup(data) {
+        return this.http.post(`${this.baseUrl}/signup`, data)
+    }
